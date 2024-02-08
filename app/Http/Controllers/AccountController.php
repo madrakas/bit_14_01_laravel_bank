@@ -51,13 +51,6 @@ class AccountController extends Controller
             'currency' => 'Eur'
         ]);
         
-        // $writer->create((object)[
-        //     'user_id' => $user->id,
-        //     'iban' => $iban,
-        //     'amount' => 0,
-        //     'currency' => 'Eur'
-        // ]);
-
         return redirect()->route('user-show')->with('ok', 'New account successfully created.');
         
         // dd([$user->id, $nextId]);
@@ -69,6 +62,16 @@ class AccountController extends Controller
     public function show(Account $account)
     {
         //
+    }
+
+    public function showAccountsByUser(){
+        $user = Auth::user();
+        $accounts = Account::query();
+        $accounts = $accounts->where('user_id', $user->id);
+        $accounts = $accounts->get();
+        return view('user.accounts', [
+            'accounts' => $accounts
+        ]);
     }
 
     /**
