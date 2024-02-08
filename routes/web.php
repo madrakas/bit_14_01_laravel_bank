@@ -29,6 +29,7 @@ Route::prefix('user')->name('user-')->group(function () {
     Route::put('/updatepw', [UC::class, 'updatepw'])->name('updatepw');
     Route::get('/delete', [UC::class, 'delete'])->name('delete');
     Route::delete('/destroy', [UC::class, 'destroy'])->name('destroy');
+    Route::post('/add-account', [AC::class, 'StoreAccountByUser'])->name('add-account');
 });
 
 Route::prefix('account')->name('account-')->group(function(){

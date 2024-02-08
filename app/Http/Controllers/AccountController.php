@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use App\Models\User;
 use App\Models\Account;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -30,6 +33,34 @@ class AccountController extends Controller
     public function store(StoreAccountRequest $request)
     {
         //
+    }
+
+    public function StoreAccountByUser(){
+        $user = Auth::user();
+        
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'accounts'");
+        $nextId = $statement[0]->Auto_increment; 
+
+        $iban = 'LT' . rand(0, 9) . rand(0, 9) . '99999' . str_pad($nextId, 10, '0', STR_PAD_LEFT);
+        
+        
+        Account::create([
+            'user_id' => $user->id,
+            'iban' => $iban,
+            'amount' => 0,
+            'currency' => 'Eur'
+        ]);
+        
+        // $writer->create((object)[
+        //     'user_id' => $user->id,
+        //     'iban' => $iban,
+        //     'amount' => 0,
+        //     'currency' => 'Eur'
+        // ]);
+
+        return redirect()->route('user-show')->with('ok', 'New account successfully created.');
+        
+        // dd([$user->id, $nextId]);
     }
 
     /**
@@ -61,6 +92,8 @@ class AccountController extends Controller
      */
     public function destroy(Account $account)
     {
-        //
+
     }
+
+    
 }
