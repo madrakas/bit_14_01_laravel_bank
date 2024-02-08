@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController AS UC;
+use App\Http\Controllers\AccountController AS AC;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,9 @@ Route::prefix('user')->name('user-')->group(function () {
     Route::delete('/destroy', [UC::class, 'destroy'])->name('destroy');
 });
 
+Route::prefix('account')->name('account-')->group(function(){
+    
+});
 
 Auth::routes();
 
