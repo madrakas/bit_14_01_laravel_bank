@@ -34,7 +34,7 @@ class UserController extends Controller
         $user->last_name = $request['last_name'];
         $user->email = $request['email'];
         $user->save();
-        return redirect()->route('home')->with('ok', 'User updated successfully.');
+        return redirect()->route('user-show')->with('ok', 'User updated successfully.');
     }
 
     public function changepw (){
@@ -60,14 +60,28 @@ class UserController extends Controller
             return redirect()->back()->with("error", "New Password cannot be same as your current password.");
         }
  
-        $user =  $auth = Auth::user();
+        $user =  Auth::user();
         $user->password =  Hash::make($request->new_password);
         $user->save();
         
-        return redirect()->route('home')->with('success', "Password Changed Successfully");
+        return redirect()->route('user-show')->with('ok', "Password Changed Successfully");
     }
 
     public function show(){
         return view('user.show');
+    }
+
+    public function delete(){
+        return view('user.delete');
+    }
+
+    public function destroy(){
+        $user = Auth::user();
+        
+        Auth::logout();
+
+        if ($user->delete()) {
+             return redirect()->route('home')->with("error", 'Your account has been deleted!');
+        }
     }
 }

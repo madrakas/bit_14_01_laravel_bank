@@ -25,8 +25,8 @@ Route::prefix('user')->name('user-')->group(function () {
     Route::put('/update', [UC::class, 'update'])->name('update');
     Route::get('/changepw', [UC::class, 'changepw'])->name('changepw');
     Route::put('/updatepw', [UC::class, 'updatepw'])->name('updatepw');
-    Route::get('/delete', [M::class, 'delete'])->name('delete');
-    Route::delete('/destroy', [M::class, 'destroy'])->name('destroy');
+    Route::get('/delete', [UC::class, 'delete'])->name('delete');
+    Route::delete('/destroy', [UC::class, 'destroy'])->name('destroy');
 });
 
 
