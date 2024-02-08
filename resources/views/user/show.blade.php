@@ -22,13 +22,7 @@
                             <a href="{{ route('user-delete') }}" class="btn btn-danger m-1">Delete user</a>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <h4>**** Add account ****</h4>
-                        <form action="{{ route('user-add-account') }}" method=post>
-                        <button type="submit">Add account</button>
-                        @csrf
-                        <form>
-                    </div>
+
                 </div>
             </div>
         </div>

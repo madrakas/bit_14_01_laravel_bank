@@ -30,6 +30,7 @@ Route::prefix('user')->name('user-')->group(function () {
     Route::get('/delete', [UC::class, 'delete'])->name('delete');
     Route::delete('/destroy', [UC::class, 'destroy'])->name('destroy');
     Route::post('/add-account', [AC::class, 'StoreAccountByUser'])->name('add-account');
+    Route::get('/show-accounts', [AC::class,  'showAccountsByUser'])->name('show-accounts');
 });
 
 Route::prefix('account')->name('account-')->group(function(){
