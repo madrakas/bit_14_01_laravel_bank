@@ -36,7 +36,10 @@
                         @endforelse
                     </table>
                     <div>
-                        <a href="{{ route('home') }}" class="btn btn-success">Add new account</a>
+                        <form action="{{ route('user-add-account') }}" method=post>
+                            <button class="btn btn-success m-1" type="submit">Add account</button>
+                            @csrf
+                        <form>
                     </div>
                 </div>
             </div>

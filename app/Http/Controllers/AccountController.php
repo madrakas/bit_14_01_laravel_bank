@@ -51,7 +51,7 @@ class AccountController extends Controller
             'currency' => 'Eur'
         ]);
         
-        return redirect()->route('user-show')->with('ok', 'New account successfully created.');
+        return redirect()->route('user-show-accounts')->with('ok', 'New account successfully created.');
         
         // dd([$user->id, $nextId]);
     }
