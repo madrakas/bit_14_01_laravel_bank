@@ -66,4 +66,8 @@ class UserController extends Controller
         
         return redirect()->route('home')->with('success', "Password Changed Successfully");
     }
+
+    public function show(){
+        return view('user.show');
+    }
 }
