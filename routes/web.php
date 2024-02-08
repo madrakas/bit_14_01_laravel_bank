@@ -23,6 +23,8 @@ Route::prefix('user')->name('user-')->group(function () {
     Route::get('/show', [UC::class, 'show'])->name('show');
     Route::get('/edit', [UC::class, 'edit'])->name('edit');
     Route::put('/update', [UC::class, 'update'])->name('update');
+    Route::get('/changepw', [UC::class, 'changepw'])->name('changepw');
+    Route::put('/updatepw', [UC::class, 'updatepw'])->name('updatepw');
     Route::get('/delete', [M::class, 'delete'])->name('delete');
     Route::delete('/destroy', [M::class, 'destroy'])->name('destroy');
 });
