@@ -42,8 +42,7 @@ class AccountController extends Controller
         $nextId = $statement[0]->Auto_increment; 
 
         $iban = 'LT' . rand(0, 9) . rand(0, 9) . '99999' . str_pad($nextId, 10, '0', STR_PAD_LEFT);
-        
-        
+                
         Account::create([
             'user_id' => $user->id,
             'iban' => $iban,

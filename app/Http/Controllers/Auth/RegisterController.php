@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Account;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use DB;
+use App\Http\Controllers\AccountController;
 
 class RegisterController extends Controller
 {
@@ -64,11 +67,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'accounts'");
+        $nextId = $statement[0]->Auto_increment; 
+        $iban = 'LT' . rand(0, 9) . rand(0, 9) . '99999' . str_pad($nextId, 10, '0', STR_PAD_LEFT);
+        Account::create([
+            'user_id' => $user->id,
+            'iban' => $iban,
+            'amount' => 0,
+            'currency' => 'Eur'
+       ]);
+
+
+        return $user;
     }
 }
