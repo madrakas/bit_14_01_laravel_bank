@@ -31,6 +31,8 @@ Route::prefix('user')->name('user-')->group(function () {
     Route::delete('/destroy', [UC::class, 'destroy'])->name('destroy');
     Route::post('/add-account', [AC::class, 'StoreAccountByUser'])->name('add-account');
     Route::get('/show-accounts', [AC::class,  'showAccountsByUser'])->name('show-accounts');
+    Route::get('/delete-account/{account}', [AC::class, 'deleteByUser'])->name('delete-account');
+    Route::delete('/destroy-account/{account}', [AC::class, 'destroyByUser'])->name('destroy-account');
 });
 
 Route::prefix('account')->name('account-')->group(function(){

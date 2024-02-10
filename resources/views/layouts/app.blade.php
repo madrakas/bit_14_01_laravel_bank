@@ -87,10 +87,13 @@
             
         </main>
         @else
-       
-
+        <main class="py-4">
+            
+            @include('layouts.errors')
+            @include('layouts.ok')
+            @include('layouts.info')
+        </main>
             @include('layouts.sidebar')
-
         @endguest     
 
 

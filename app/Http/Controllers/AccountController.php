@@ -97,5 +97,39 @@ class AccountController extends Controller
 
     }
 
+    public function deleteByUser(Account $account){
+        //check if account belongst to user
+        $user = Auth::user();
+        
+        if ($account->user_id !== $user->id){
+            return redirect()->route('user-show-accounts')->with('info', 'Account not found.');
+        } 
+        
+        if ($account->amount !== 0.00){
+            return redirect()->route('user-show-accounts')->with('info', 'Account amount must be 0 to delete.');
+        } 
+        
+        return view('user.dellacc', [
+            'account' => $account,
+        ]);
+        
+    }
+
+    public function destroyByUser(Account $account) {
+        $user = Auth::user();
+        
+        if ($account->user_id !== $user->id){
+            return redirect()->route('user-show-accounts')->with('info', 'Account not found.');
+        } 
+        
+        if ($account->amount !== 0.00){
+            return redirect()->route('user-show-accounts')->with('info', 'Account amount must be 0 to delete.');
+        } 
+
+        $account->delete();
+        return redirect()->route('user-show-accounts')->with('info', 'Account deleted.');;
+
+
+    }
     
 }

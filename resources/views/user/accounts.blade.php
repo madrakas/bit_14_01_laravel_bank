@@ -24,7 +24,7 @@
                             <td>{{ $acc-> currency}}</td>
                             <td>
                                 <a class="btn btn-primary m-1" href={{ route('home', $acc) }}>View transactions</a>
-                                <a class="btn btn-danger m-1" href={{ route('home', $acc) }}>Delete account</a>
+                                <a class="btn btn-danger m-1" href={{ route('user-delete-account', $acc) }}>Delete account</a>
                             </td>
                         </tr>
                         @empty
