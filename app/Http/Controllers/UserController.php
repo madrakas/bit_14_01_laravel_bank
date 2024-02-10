@@ -71,11 +71,41 @@ class UserController extends Controller
     }
 
     public function delete(){
+        $user =  Auth::user();
+        $accounts = Account::query();
+        $accounts = $accounts->where('user_id', $user->id);
+        $accounts = $accounts->get();
+        $amountTotal = 0;
+        foreach ($accounts as $acc) {
+            $amountTotal += $acc->amount;
+        }
+
+        if ($amountTotal !== 0.00){
+            return redirect()->route('user-show')->with('info', "Cannot delete. User's accounts balance is not 0.");
+        }
+            
         return view('user.delete');
     }
 
     public function destroy(){
-        $user = Auth::user();
+        $user =  Auth::user();
+        $accounts = Account::query();
+        $accounts = $accounts->where('user_id', $user->id);
+        $accounts = $accounts->get();
+        $amountTotal = 0;
+        foreach ($accounts as $acc) {
+            $amountTotal += $acc->amount;
+        }
+
+        if ($amountTotal !== 0.00){
+            return redirect()->route('user-show')->with('info', "Cannot delete. User's accounts balance is not 0.");
+        }
+
+        if ($accounts->count() > 0) {
+            foreach ($accounts as $acc) {
+                $acc->delete();
+            }
+        }
         
         Auth::logout();
 
@@ -83,6 +113,5 @@ class UserController extends Controller
              return redirect()->route('home')->with("error", 'Your account has been deleted!');
         }
     }
-
 
 }
