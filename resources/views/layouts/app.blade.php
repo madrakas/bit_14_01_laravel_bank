@@ -72,12 +72,31 @@
             </div>
         </nav>
 
+        @guest
+
         <main class="py-4">
             @include('layouts.errors')
             @include('layouts.ok')
             @include('layouts.info')
-            @yield('content')
+            
+            <div class="container">
+                <div class="row justify-content-center">
+                    @yield('content')
+                </div>
+            </div>
+            
         </main>
+        @else
+       
+
+            @include('layouts.sidebar')
+
+        @endguest     
+
+
+
+        
+
     </div>
 </body>
 </html>

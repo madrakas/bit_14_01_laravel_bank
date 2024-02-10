@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('View user profile') }}</div>
+        <div class="col-md-9">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h4>View user profile</h4>
+                </div>
+
                 <div class="card-body">
                     <div class="row mb-3">
                         <h4>User name</h4>
@@ -22,11 +23,9 @@
                             <a href="{{ route('user-delete') }}" class="btn btn-danger m-1">Delete user</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 @endsection
 @section('title', 'View user profile')
