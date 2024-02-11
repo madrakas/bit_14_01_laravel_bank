@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController AS UC;
 use App\Http\Controllers\AccountController AS AC;
+use App\Http\Controllers\TransactionController AS TC;
 
 
 /*
@@ -35,8 +36,14 @@ Route::prefix('user')->name('user-')->group(function () {
     Route::delete('/destroy-account/{account}', [AC::class, 'destroyByUser'])->name('destroy-account');
 });
 
+Route::prefix('transaction')->name('transaction-')->group(function () {
+    Route::get('/create', [TC::class, 'create'])->name('create');
+    Route::post('/', [TC::class, 'store'])->name('store');
+});
+
+//Account space group
 Route::prefix('account')->name('account-')->group(function(){
-    
+   
 });
 
 Auth::routes();
