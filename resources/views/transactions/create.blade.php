@@ -33,7 +33,7 @@
                             <label for="toIBAN" class="col-md-4 col-form-label text-md-end">{{ __('To account') }}</label>
 
                             <div class="col-md-6">
-                                <input id="toIBAN" type="text" class="form-control @error('toIBAN') is-invalid @enderror" name="toIBAN" value="{{ old('toIBAN', Auth::user()->last_name) }}" required autocomplete="toIBAN">
+                                <input id="toIBAN" type="text" class="form-control @error('toIBAN') is-invalid @enderror" name="toIBAN" value="{{ old('toIBAN', '') }}" required autocomplete="toIBAN">
 
                                 @error('toIBAN')
                                     <span class="invalid-feedback" role="alert">

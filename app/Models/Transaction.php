@@ -12,7 +12,7 @@ class Transaction extends Model
     protected $fillable =[
         'time',
         'fromAccountId',
-        'toAccountID',
+        'toAccountId',
         'fromIBAN',
         'toIBAN',
         'fromName',

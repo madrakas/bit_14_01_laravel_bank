@@ -7,6 +7,7 @@ use App\Models\Account;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -35,9 +36,53 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTransactionRequest $request)
+    // public function store(StoreTransactionRequest $request)
+    public function store(Request $request)
     {
-        Transaction::create($request->all());
+        $time =  date("Y-m-d H:i:s");
+        $riban = $request->toIBAN;
+        
+        $accounts = Account::query();
+        $accounts = $accounts->where('id', $request->fromAccountId);
+        $accounts = $accounts->get();
+        $fromIBAN = $accounts[0]['iban'];
+        $fromAmount = $accounts[0]['amount'];
+
+        if ($request->amount > $fromAmount) {
+            return redirect()->route('transaction-create')->with('info', "Insufficient funds in your account.");
+        }
+        $accounts[0]->amount -= $request->amount;
+        $accounts[0]->save();
+
+        //determine if recipients account is Bit account format
+        $bankCode = substr($riban, 4, 5);
+        if ($bankCode === '99999'){
+            $accounts = Account::query();
+            $accounts = $accounts->where('iban', $riban);
+            $accounts = $accounts->get();
+            if ($accounts->count() < 1) {
+                return redirect()->route('transaction-create')->with('info', "Recipients account not found in BIT bank.");
+            }
+            $toAccountId = $accounts[0]['id'];
+            $accounts[0]->amount += $request->amount;
+            $accounts[0]->save();
+
+        }else{  //if reicipient is BIT account, check if account exists
+            $toAccountId = 0;
+        }
+        
+        $user = Auth::user();
+        $fromName = $user->first_name . ' ' . $user->last_name;
+
+        Transaction::create($request->all() + [
+            'time' => $time,
+            'toAccountId' => 2,
+            'fromIBAN' => $fromIBAN,
+            'fromName' => $fromName,
+            'currency' => 'Eur,'
+        ]);
+
+        return redirect()->route('user-show-accounts')->with('info', "Transaction complete.");
     }
 
     /**
