@@ -14,7 +14,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link link-body-emphasis">
+                                <a href="{{route('transaction-create')}}" class="nav-link  {{ (Route::currentRouteName() === 'transaction-create') ? 'active' : 'link-body-emphasis' }}" {{ (Route::currentRouteName() === 'transaction-create') ? 'aria-current="page"' : '' }}>
                                     New transaction
                                 </a>
                             </li>
