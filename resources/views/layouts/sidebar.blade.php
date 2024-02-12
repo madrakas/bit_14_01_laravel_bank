@@ -19,7 +19,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link link-body-emphasis">
+                                <a href="{{route('transaction-view-user')}}" class="nav-link  {{ (Route::currentRouteName() === 'transaction-view-user') ? 'active' : 'link-body-emphasis' }}" {{ (Route::currentRouteName() === 'transaction-view-user') ? 'aria-current="page"' : '' }}>
                                     Transactions history
                                 </a>
                             </li>

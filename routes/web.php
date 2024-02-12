@@ -39,6 +39,7 @@ Route::prefix('user')->name('user-')->group(function () {
 Route::prefix('transaction')->name('transaction-')->group(function () {
     Route::get('/create', [TC::class, 'create'])->name('create');
     Route::post('/', [TC::class, 'store'])->name('store');
+    Route::get('/view-user', [TC::class, 'viewByUser'])->name('view-user');
 });
 
 //Account space group
