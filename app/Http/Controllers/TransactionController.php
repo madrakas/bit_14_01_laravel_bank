@@ -19,6 +19,59 @@ class TransactionController extends Controller
         //
     }
 
+    public function viewByUser()
+    {
+        $user=Auth::user();
+        $accounts = Account::query();
+        $accounts = $accounts->where('user_id', $user->id);
+        $accounts = $accounts->get();
+
+        $transactions = [];  
+        
+        foreach ($accounts as $acc) {
+            $from = [];
+            $to = [];      
+
+            $transactionsFrom =Transaction::query();
+            $transactionsFrom = $transactionsFrom->where('fromAccountId', $acc->id); 
+            $transactionsFrom = $transactionsFrom->get();
+            $transactionsTo =Transaction::query();
+            $transactionsTo = $transactionsTo->where('toAccountId', $acc->id);   
+            $transactionsTo = $transactionsTo->get();
+
+            foreach ($transactionsFrom as $transaction) {
+                $from[] = [
+                    'time' => $transaction->time,
+                    'toIBAN' => $transaction->toIBAN,
+                    'toName'=> $transaction->toName,
+                    'amount' => $transaction->amount,
+                    'currency' => 'Eur',
+                ];    
+            } 
+
+            foreach ($transactionsTo as $transaction) {
+                $to[] = [
+                    'time' => $transaction->time,
+                    'fromIBAN' => $transaction->fromIBAN,
+                    'fromName'=> $transaction->fromName,
+                    'amount' => $transaction->amount,
+                    'currency' => 'Eur',
+                ];    
+            } 
+            
+            $transactions[]=[
+                'account' => $acc->iban,
+                'from' => $from,
+                'to'=> $to,
+            ];
+        }
+
+        return view('transactions.user', [
+            'transactions' => $transactions
+        ]);
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -76,7 +129,7 @@ class TransactionController extends Controller
 
         Transaction::create($request->all() + [
             'time' => $time,
-            'toAccountId' => 2,
+            'toAccountId' => $toAccountId,
             'fromIBAN' => $fromIBAN,
             'fromName' => $fromName,
             'currency' => 'Eur,'
