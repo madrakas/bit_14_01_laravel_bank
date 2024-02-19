@@ -116,7 +116,6 @@ class TransactionController extends Controller
             'to'=> $to,
         ];
 
-
         return view('transactions.account', [
              'transactions' => $transactions
         ]);

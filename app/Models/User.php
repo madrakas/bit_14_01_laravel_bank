@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -22,6 +21,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'isadmin',
     ];
 
     /**
@@ -48,5 +48,4 @@ class User extends Authenticatable
     {
         return  $this->hasMany(Account::class);
     }
-    
 }
