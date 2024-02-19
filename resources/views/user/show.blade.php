@@ -16,6 +16,12 @@
                         <h4>User email</h4>
                         <p class="card-text">{{ Auth::user()->email }}</p>
                     </div>
+                    @if (Auth::user()->isadmin)
+                    <div class="row mb-3">
+                        <h4>User is administrator</h4>
+                        <p class="card-text">Note: This user has administrator rights.</p>
+                    </div>
+                    @endif
                     <div class="row mb-0">
                         <div class="col-md-8 offset-md-2">
                             <a href="{{ route('user-edit') }}" class="btn btn-primary m-1">Edit user</a>
