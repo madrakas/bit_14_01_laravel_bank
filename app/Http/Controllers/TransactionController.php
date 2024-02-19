@@ -72,6 +72,56 @@ class TransactionController extends Controller
         
     }
 
+
+    public function ViewByUserAccountID(Account $account){
+        $user=Auth::user();
+        
+        if ($account->user_id !== $user->id){
+            return redirect()->route('user-show-accounts')->with('info', 'Account not found');
+        }
+
+        $from = [];
+        $to = [];      
+
+        $transactionsFrom =Transaction::query();
+        $transactionsFrom = $transactionsFrom->where('fromAccountId', $account->id); 
+        $transactionsFrom = $transactionsFrom->get();
+        $transactionsTo =Transaction::query();
+        $transactionsTo = $transactionsTo->where('toAccountId', $account->id);   
+        $transactionsTo = $transactionsTo->get();
+
+        foreach ($transactionsFrom as $transaction) {
+            $from[] = [
+                'time' => $transaction->time,
+                'toIBAN' => $transaction->toIBAN,
+                'toName'=> $transaction->toName,
+                'amount' => $transaction->amount,
+                'currency' => 'Eur',
+            ];    
+        } 
+
+        foreach ($transactionsTo as $transaction) {
+            $to[] = [
+                'time' => $transaction->time,
+                'fromIBAN' => $transaction->fromIBAN,
+                'fromName'=> $transaction->fromName,
+                'amount' => $transaction->amount,
+                'currency' => 'Eur',
+            ];    
+        } 
+        
+        $transactions[]=[
+            'account' => $account->iban,
+            'from' => $from,
+            'to'=> $to,
+        ];
+
+
+        return view('transactions.account', [
+             'transactions' => $transactions
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
